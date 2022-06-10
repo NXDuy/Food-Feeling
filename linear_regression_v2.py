@@ -13,7 +13,7 @@ class Linear():
         self.grad = torch.ones(output_dim, input_dim)
         self.grad_zero = True
         self.n_samples = batch_size
-        self.grad_delta = 0.00001
+        # self.grad_delta = 0.00001
 
     def __call__(self, input_data):
         self.grad_zero = False
@@ -26,7 +26,7 @@ class Linear():
             return torch.mm(self.__params, input_data)
 
     def zero_grad(self):
-        self.grad_zero = False
+        self.grad_zero = True
         self.grad = torch.ones(self.output_dim, self.input_dim)
 
     def parameters(self):
@@ -36,7 +36,7 @@ class Linear():
         self.grad_zero = False
         
         loss_list = (predicted - true_value)
-        self.grad *= (2.0/self.n_samples*loss_list)
+        self.grad *= (1.0/self.n_samples*loss_list)
 
         loss = 0
         for row_loss in loss_list:
@@ -72,9 +72,9 @@ for epoch in range(epochs):
 
         total_samples += output_data.shape[0]
         model.train(input_data, output_data)
-        print('Data:',input_data, output_data)
-        print('Params:',model.grad, model.parameters())
+        # print('Data:',input_data, output_data)
+        # print('Params:',model.grad, model.parameters())
 
-        break
-    break
+        # break
+    # break
     print(f'{epoch} with loss mean {total_loss/total_samples}')

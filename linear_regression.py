@@ -53,6 +53,8 @@ for epoch in range(epochs):
 
         total_samples += output_data.shape[0]
         model.train(input_data, output_data)
-
-    # break
+        print('Data:',input_data, output_data)
+        print('Params:', model.parameters())
+        break
+    break
     print(f'{epoch} with loss mean {total_loss/total_samples}')
