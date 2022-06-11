@@ -5,16 +5,16 @@ from torch import nn
 from torch.utils.data import DataLoader
 
 class Linear(nn.Module):
-    def __init__(self, input_dim, output_dim=1, lr=0.01, batch_size=1):
+    def __init__(self, input_dim, output_dim=1, lr=0.01, batch_size=1, device=torch.device('cpu')):
         super(Linear, self).__init__()
         self.input_dim = input_dim
         self.output_dim = output_dim
+        self.device = device
         self.__params = torch.ones(1, input_dim).to(device)
         self.learning_rate = lr
         self.grad = torch.ones(batch_size, input_dim).to(device)
         self.grad_zero = True
         self.n_samples = batch_size
-        # self.grad_delta = 0.00001
 
     def __call__(self, input_data):
         self.grad_zero = False
@@ -28,7 +28,7 @@ class Linear(nn.Module):
 
     def zero_grad(self):
         self.grad_zero = True
-        self.grad = torch.ones(self.n_samples, self.input_dim).to(device)
+        self.grad = torch.ones(self.n_samples, self.input_dim).to(self.device)
 
     def parameters(self):
         return self.__params
@@ -54,9 +54,9 @@ class Linear(nn.Module):
         optimizer = optimizer.view(1, -1)
         self.__params -= optimizer
 
-
+'''
 input_dim = 3
-learning_rate = 0.2
+learning_rate = 0.01
 batch_size = 50 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') 
 data = FoodFeeling()
@@ -85,3 +85,4 @@ for epoch in range(epochs):
         model.train(input_data, output_data)
         # break
     print(f'{epoch} with loss mean {total_loss/total_samples}')
+'''

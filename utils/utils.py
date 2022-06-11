@@ -38,9 +38,9 @@ def read_file(file_dir, columns=None):
     using_data["viewer feeling of youtuber's style "] = using_data["viewer feeling of youtuber's style "].astype('int') 
     
     # Normalization
-    using_data['start time'] = (using_data['start time'] - using_data['start time'].mean())/using_data['start time'].var()
-    using_data['end time'] = (using_data['end time'] - using_data['end time'].mean())/using_data['end time'].var()
-    using_data['Unnamed: 11'] = (using_data['Unnamed: 11'] - using_data['Unnamed: 11'].mean())/using_data['Unnamed: 11'].var()
+    using_data['start time'] = using_data['start time']/using_data['start time'].max()
+    using_data['end time'] = using_data['end time']/using_data['end time'].max()
+    using_data['Unnamed: 11'] = using_data['Unnamed: 11']/using_data['Unnamed: 11'].max()
     
     # using_data = using_data.dropna(axis=0)
 
