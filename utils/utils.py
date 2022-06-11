@@ -91,17 +91,29 @@ def process_time_str(time_str):
         __check_value_time(seconds=seconds)
 
         return seconds
-    
+
+def lr_schedular(cur_epoch, lr, lr_decay, epoch_decay):
+    if cur_epoch%epoch_decay == 0:
+        # print('Learning rate: ', cur_epoch, lr)
+        return lr-lr_decay
+    else: 
+        return lr
 
 FILE_DIR = './Data/Data_AIL.xlsx'
 COLUMNS = ['start time', 'end time', 'Unnamed: 11',
             "viewer feeling of youtuber's style "]
 
 class FoodFeeling(Dataset):
-    def __init__(self, file_dir=FILE_DIR, columns=COLUMNS):
+    def __init__(self, file_dir=FILE_DIR, columns=COLUMNS, has_bias=True):
         super(FoodFeeling, self).__init__()
         self.input_data, self.output_data = read_file(file_dir, columns)
         self.n_samples = self.output_data.shape[0]
+        self.n_features = len(columns) - 1
+        if has_bias == True:
+            # print(self.input_data.shape)
+            self.input_data = torch.cat((self.input_data, torch.ones(self.n_samples, 1)),1)
+            # print(self.input_data)
+            self.n_features += 1
 
     def __getitem__(self, index):
         return self.input_data[index], self.output_data[index]
