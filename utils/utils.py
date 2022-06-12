@@ -45,7 +45,7 @@ def read_file(file_dir, columns=None):
     # using_data = using_data.dropna(axis=0)
 
     input_data = using_data[['start time', 'end time', 'Unnamed: 11']]
-    output_data = using_data["viewer feeling of youtuber's style "]/5
+    output_data = using_data["viewer feeling of youtuber's style "]
     # print(using_data.head())
     return torch.tensor(input_data.values, dtype=torch.float32), torch.tensor(output_data.values, dtype=torch.float32)
         
@@ -95,7 +95,7 @@ def process_time_str(time_str):
 def lr_schedular(cur_epoch, lr, lr_decay, epoch_decay):
     if cur_epoch%epoch_decay == 0:
         # print('Learning rate: ', cur_epoch, lr)
-        return lr-lr_decay
+        return lr*(1-lr_decay)
     else: 
         return lr
 

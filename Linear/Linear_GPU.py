@@ -45,9 +45,10 @@ class Linear(nn.Module):
         loss = 0
         for row_loss in loss_list:
             for value in row_loss:
+                # print(value.item())
                 loss += pow(value.item(),2)
 
-        return 1.0/self.n_samples*loss
+        return (1.0/self.n_samples)*loss
 
     def train(self, input_data, output_data):
         if self.grad_zero == True:
