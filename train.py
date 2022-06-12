@@ -12,7 +12,7 @@ def get_args(n_features):
     training_params ={
         'learning_rate': 0.01,
         'batch_size': 50,
-        'epochs':1000,
+        'epochs':1,
         'device': device,
         'n_features': n_features,
         'n_samples': 0.7 
@@ -60,7 +60,7 @@ def split_train_test():
     train_size = int(n_samples*training_params['n_samples'])
     test_size = n_samples - train_size
 
-    train_set, test_set = random_split(database, [train_size, test_size], generator=torch.Generator().manual_seed(42))
+    train_set, test_set = random_split(database, [train_size, test_size], generator=torch.Generator().manual_seed(72))
     train_loader = DataLoader(train_set, batch_size=training_params['batch_size'])
     test_loader = DataLoader(test_set, batch_size=testing_params['batch_size'])
 
@@ -76,7 +76,7 @@ def train(train_loader, training_params):
     epochs = training_params['epochs'] 
     device = training_params['device']
     model, best_params, best_loss = load_model(training_params=training_params)
-    print(model.parameters(), best_params, best_loss)
+    # print(model.parameters(), best_params, best_loss)
     for epoch in range(epochs):
         total_loss = 0
         total_samples = 0
