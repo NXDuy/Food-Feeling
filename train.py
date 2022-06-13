@@ -1,4 +1,4 @@
-from more_itertools import last
+# from more_itertools import last
 from Linear.Linear_GPU import Linear
 from utils.utils import FoodFeeling, lr_schedular
 import torch
