@@ -5,6 +5,7 @@ import torch
 from torch.utils.data import DataLoader, random_split
 from os.path import exists
 import math
+import matplotlib.pyplot as plt
 
 def get_args(n_features):
     
@@ -68,14 +69,26 @@ def split_train_test():
 
 def train_and_evaluate():
     training_params ,train_loader, test_loader = split_train_test()
-    train(train_loader, training_params)
+    epoch_error = train(train_loader, training_params)
     evaluate(training_params, test_loader)
+    plot_loss(epoch_error[40:])
+
+def plot_loss(epoch_loss):
+    epoch_x_axis = [value[0] for value in epoch_loss]
+    loss_y_axis = [value[1] for value in epoch_loss]
+
+    plt.plot(epoch_x_axis, loss_y_axis)
+    plt.xlabel('Epoch')
+    plt.ylabel('Error of model')
+    plt.show()
+    return
 
 def train(train_loader, training_params):
     
     epochs = training_params['epochs'] 
     device = training_params['device']
     model, best_params, best_loss = load_model(training_params=training_params)
+    epoch_error =  list()
     # print(model.parameters(), best_params, best_loss)
     for epoch in range(epochs):
         total_loss = 0
@@ -96,8 +109,13 @@ def train(train_loader, training_params):
             best_loss = total_loss/total_samples
             best_params.copy_(model.parameters())
         
-        print(f'{epoch} with loss mean {pow(total_loss/total_samples, 0.5)*5}')
+        cur_error = pow(total_loss/total_samples, 0.5)*5
+        epoch_error.append([epoch, cur_error])
+        print(f'{epoch} with loss mean {cur_error}')
+
     save_model(best_params=best_params, best_loss=best_loss)
+    
+    return epoch_error
 
 def evaluate(training_params, test_loader):
     model = load_model(training_params)

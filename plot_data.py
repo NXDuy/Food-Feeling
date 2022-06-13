@@ -6,7 +6,7 @@ from utils.utils import FoodFeeling
 
 dataset = FoodFeeling()
 
-plt.plot(dataset.input_data[:, 2], dataset.output_data, 'o')
+plt.plot(dataset.input_data[:, 1], dataset.output_data, 'o')
 plt.xlabel('Video start time')
 plt.ylabel('Video feeling')
 plt.show()

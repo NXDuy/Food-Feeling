@@ -8,7 +8,9 @@ def read_file(file_dir, columns=None):
     try:
         raw_data = pd.read_excel(file_dir)
     except:
-        return None
+        print('CANNOT READ FILE DATA')
+        quit(0)
+        # return None
     
     using_data = raw_data[columns]
     using_data = using_data.dropna(axis=0)
@@ -120,3 +122,6 @@ class FoodFeeling(Dataset):
 
     def __len__(self):
         return self.n_samples
+
+
+# print
