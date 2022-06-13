@@ -10,9 +10,9 @@ def get_args(n_features):
     
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu') 
     training_params ={
-        'learning_rate': 0.01,
+        'learning_rate': 0.1,
         'batch_size': 50,
-        'epochs':1,
+        'epochs':500,
         'device': device,
         'n_features': n_features,
         'n_samples': 0.7 
@@ -38,7 +38,7 @@ def load_model(training_params):
     best_loss = MAX_LOSS
 
     if exists("checkpoint/linear.pth"):
-        last_model = torch.load('checkpoint/linear.pth')
+        last_model = torch.load('checkpoint/linear.pth', map_location=device)
         model.load_weight(last_model['params'])
         best_loss = last_model['loss']
         best_params = last_model['params']
@@ -90,13 +90,13 @@ def train(train_loader, training_params):
             total_loss += model.MSELoss(y_hat, output_data)
             # print(model.parameters(), total_loss)
 
-            total_samples += output_data.shape[0]
+            total_samples += 1 
             model.train(input_data, output_data)
         if math.isnan(total_loss) == False and best_loss > total_loss/total_samples:
             best_loss = total_loss/total_samples
             best_params.copy_(model.parameters())
         
-        print(f'{epoch} with loss mean {total_loss/total_samples}')
+        print(f'{epoch} with loss mean {pow(total_loss/total_samples, 0.5)*5}')
     save_model(best_params=best_params, best_loss=best_loss)
 
 def evaluate(training_params, test_loader):
@@ -120,6 +120,6 @@ def evaluate(training_params, test_loader):
         total_samples += 1
         break
     
-    print(f'Mean Loss For testing data: {total_loss/total_samples}')
+    print(f'Mean Loss For testing data: {pow(total_loss/total_samples, 0.5)*5}')
 if __name__ == '__main__':
     train_and_evaluate()

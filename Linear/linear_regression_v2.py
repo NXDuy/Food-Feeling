@@ -1,7 +1,7 @@
 from pickletools import optimize
 import torch
 import numpy as np
-from utils import FoodFeeling
+from utils.utils import FoodFeeling
 import copy
 
 class Linear():

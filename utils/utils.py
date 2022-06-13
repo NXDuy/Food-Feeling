@@ -45,7 +45,7 @@ def read_file(file_dir, columns=None):
     # using_data = using_data.dropna(axis=0)
 
     input_data = using_data[['start time', 'end time', 'Unnamed: 11']]
-    output_data = using_data["viewer feeling of youtuber's style "]
+    output_data = using_data["viewer feeling of youtuber's style "]/5
     # print(using_data.head())
     return torch.tensor(input_data.values, dtype=torch.float32), torch.tensor(output_data.values, dtype=torch.float32)
         

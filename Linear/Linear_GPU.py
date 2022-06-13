@@ -41,6 +41,7 @@ class Linear(nn.Module):
         self.grad_zero = False
         loss_list = (predicted - true_value)
         self.grad = torch.mm(loss_list, self.grad) 
+        self.grad *= (1.0/self.n_samples)
 
         loss = 0
         for row_loss in loss_list:
