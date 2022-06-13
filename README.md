@@ -8,4 +8,4 @@ For training and evaluating model running this code
 
 `python3 train.py`
 
-And the report of this project is **AIL-Report.pdf** is written in Vietnamese language
+The report of this project is **AIL-Report.pdf** and is written in the Vietnamese language
