@@ -136,7 +136,6 @@ def evaluate(training_params, test_loader):
         total_loss += model.MSELoss(y_hat, output_data)
 
         total_samples += 1
-        break
     
     print(f'Mean Loss For testing data: {pow(total_loss/total_samples, 0.5)*5}')
 if __name__ == '__main__':
